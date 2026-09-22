@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael的語動力 - 凌雲專屬口舌與言語復健伴侶</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 頂部應用導航欄 -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="brand-icon">🗣️</div>
+        <div>
+          <h1 class="brand-title">Michael的語動力</h1>
+          <div class="brand-subtitle">凌雲專屬・口舌靈活與大聲言語復健伴侶</div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- 今日練習打卡累計 -->
+        <div class="streak-badge" title="今日已完成訓練次數">
+          <span>🏆 今日練習：</span>
+          <span id="streak-count-val">0</span>
+          <span>次</span>
+        </div>
+
+        <!-- 字體大小調節器 -->
+        <div class="font-size-switcher" role="group" aria-label="字體大小">
+          <button class="font-btn active" data-size="standard">標準</button>
+          <button class="font-btn" data-size="large">大字</button>
+          <button class="font-btn" data-size="xlarge">特大</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 即時音量能量計 (全域頂部反饋，幫助病友看見自己的聲音) -->
+  <section class="loudness-meter-panel">
+    <div class="meter-inner">
+      <div class="meter-status-box">
+        <button id="mic-toggle-btn" class="mic-toggle-btn">
+          <span>🎙️ 開啟音量反饋</span>
+        </button>
+        <span id="mic-status-label" style="font-size: 0.9rem; color: #94a3b8;">未啟動</span>
+      </div>
+
+      <div class="meter-track-wrap">
+        <div class="meter-label-row">
+          <span>微弱音量</span>
+          <span style="color: #4ade80;">🎯 目標宏亮區間 (LSVT LOUD)</span>
+          <span>超宏亮</span>
+        </div>
+        <div class="meter-bar-track">
+          <div class="meter-target-zone" title="請努力讓聲音能量進入此綠色達標區"></div>
+          <div id="meter-bar-fill" class="meter-bar-fill"></div>
+        </div>
+      </div>
+
+      <div id="meter-feedback-text" class="meter-feedback-text">
+        點擊左側開啟麥克風反饋
+      </div>
+    </div>
+  </section>
+
+  <!-- 主要互動內容 -->
+  <main class="main-container">
+
+    <!-- 四大訓練模組切換大按鈕 -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" data-tab="warmup">
+        <span class="tab-icon">🔔</span>
+        <span class="tab-title">1. 暖身開嗓</span>
+        <span class="tab-desc">長音持平與音調爬坡</span>
+      </button>
+
+      <button class="nav-tab-btn" data-tab="oral">
+        <span class="tab-icon">👅</span>
+        <span class="tab-title">2. 口舌靈活操</span>
+        <span class="tab-desc">唇舌力量與靈活度</span>
+      </button>
+
+      <button class="nav-tab-btn" data-tab="syllables">
+        <span class="tab-icon">⚡</span>
+        <span class="tab-title">3. 啪嗒咖輪替</span>
+        <span class="tab-desc">DDK 快速敏捷構音</span>
+      </button>
+
+      <button class="nav-tab-btn" data-tab="sentences">
+        <span class="tab-icon">💬</span>
+        <span class="tab-title">4. 短句與繞口令</span>
+        <span class="tab-desc">分段大聲說・趣味繞口令</span>
+      </button>
+    </nav>
+
+    <!-- ==================== 模組一：暖身開嗓 ==================== -->
+    <section id="tab-warmup" class="tab-content-panel active">
+      <div class="exercise-card">
+        <div class="card-header-bar">
+          <span id="warmup-category" class="category-tag">持續發聲</span>
+          <span id="warmup-counter" class="item-counter">第 1 / 4 項</span>
+        </div>
+
+        <h2 id="warmup-title" class="card-title">深吸發長音「啊——」</h2>
+        <div id="warmup-instruction" class="card-instruction">
+          先用鼻子深吸一口大氣，挺胸坐直。嘴巴張大成圓形，大聲且平穩地發出「啊——」的聲音，直到氣息用盡。
+        </div>
+
+        <div id="warmup-tip" class="tip-box">
+          💡 目標：維持聲音洪亮、音量平穩不抖動，挑戰達到 8~12 秒！
+        </div>
+
+        <!-- 視覺目標字 -->
+        <div class="display-target-box">
+          <div id="warmup-giant-text" class="giant-text">啊——————</div>
+        </div>
+
+        <!-- 計時圓環 -->
+        <div class="timer-display-wrap">
+          <div id="warmup-timer-circle" class="timer-circle">
+            <span id="warmup-timer-num" class="timer-sec-number">10</span>
+            <span class="timer-sec-label">秒鐘倒數</span>
+          </div>
+        </div>
+
+        <!-- 操作按鈕欄 -->
+        <div class="action-buttons-grid">
+          <button id="warmup-demo-btn" class="btn-elderly btn-outline">
+            <span>🔊 聽發音示範</span>
+          </button>
+          <button id="warmup-start-btn" class="btn-elderly btn-success">
+            <span>▶ 開始發長音（10秒）</span>
+          </button>
+        </div>
+
+        <!-- 翻頁列 -->
+        <div class="pagination-bar">
+          <button id="warmup-prev-btn" class="nav-arrow-btn" disabled>
+            <span>◀ 上一項訓練</span>
+          </button>
+          <button id="warmup-next-btn" class="nav-arrow-btn">
+            <span>下一項訓練 ▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 模組二：口舌靈活操 ==================== -->
+    <section id="tab-oral" class="tab-content-panel">
+      <div class="exercise-card">
+        <div class="card-header-bar">
+          <span id="oral-category" class="category-tag">唇部力量</span>
+          <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <span id="oral-reps-badge" class="category-tag" style="background:#fef3c7; color:#b45309;">目標完成：5 次</span>
+            <span id="oral-counter" class="item-counter">第 1 / 6 項</span>
+          </div>
+        </div>
+
+        <h2 id="oral-title" class="card-title">嘟嘴與燦爛露齒笑</h2>
+        <div id="oral-instruction" class="card-instruction">
+          雙唇用力向前噘起像吹口哨（保持3秒），隨後嘴角盡量往後向上拉開、露出牙齒燦爛微笑（保持3秒）。
+        </div>
+
+        <div id="oral-tip" class="tip-box">
+          💡 改善唇部肌張力，防止說話字音閉合不全或流口水。
+        </div>
+
+        <!-- 動作圖解插圖 -->
+        <div class="motion-illustration-box">
+          <div id="oral-svg-wrap" class="motion-svg-wrap"></div>
+          <div id="oral-motion-caption" class="motion-caption">動作引導載入中...</div>
+        </div>
+
+        <!-- 計時圓環 -->
+        <div class="timer-display-wrap">
+          <div id="oral-timer-circle" class="timer-circle">
+            <span id="oral-timer-num" class="timer-sec-number">3</span>
+            <span class="timer-sec-label">保持秒數</span>
+          </div>
+        </div>
+
+        <!-- 操作按鈕欄 -->
+        <div class="action-buttons-grid">
+          <button id="oral-start-btn" class="btn-elderly btn-primary">
+            <span>▶ 開始口舌操引導</span>
+          </button>
+        </div>
+
+        <!-- 翻頁列 -->
+        <div class="pagination-bar">
+          <button id="oral-prev-btn" class="nav-arrow-btn" disabled>
+            <span>◀ 上一動作</span>
+          </button>
+          <button id="oral-next-btn" class="nav-arrow-btn">
+            <span>下一動作 ▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 模組三：敏捷音節輪替 (DDK) ==================== -->
+    <section id="tab-syllables" class="tab-content-panel">
+      <div class="exercise-card">
+        <div class="card-header-bar">
+          <span class="category-tag">DDK 快速輪替構音</span>
+          <span id="syl-counter" class="item-counter">第 1 / 5 組</span>
+        </div>
+
+        <h2 id="syl-title" class="card-title">雙唇爆破音：啪、啪、啪</h2>
+        <div id="syl-instruction" class="card-instruction">
+          雙唇快速用力閉合再打開，發音要有清脆爆破感！
+        </div>
+
+        <div id="syl-tip" class="tip-box">
+          💡 鍛鍊上下唇（雙唇音 P/B/M），防止說話含糊不清。
+        </div>
+
+        <!-- 節拍器工具欄 -->
+        <div class="metronome-controls">
+          <div class="metro-info">
+            <span id="syl-metro-dot" class="metro-pulse-dot"></span>
+            <span>跟著節拍器速度：<strong id="syl-target-speed">每秒 2~3 下</strong></span>
+          </div>
+          <div class="metro-btns">
+            <button class="bpm-chip" data-bpm="60">慢速 (60 BPM)</button>
+            <button class="bpm-chip active" data-bpm="75">標準 (75 BPM)</button>
+            <button class="bpm-chip" data-bpm="90">敏捷 (90 BPM)</button>
+          </div>
+        </div>
+
+        <!-- 巨型字音卡展示 -->
+        <div class="display-target-box">
+          <div id="syl-giant-display" class="giant-text">
+            <span class="syllable-char">啪</span> <span class="syllable-char">啪</span> <span class="syllable-char">啪</span>
+          </div>
+        </div>
+
+        <!-- 按鈕欄 -->
+        <div class="action-buttons-grid">
+          <button id="syl-demo-btn" class="btn-elderly btn-outline">
+            <span>🔊 聽示範讀音</span>
+          </button>
+          <button id="syl-metro-btn" class="btn-elderly btn-warm">
+            <span>🎵 啟動木魚節拍器</span>
+          </button>
+        </div>
+
+        <!-- 翻頁列 -->
+        <div class="pagination-bar">
+          <button id="syl-prev-btn" class="nav-arrow-btn" disabled>
+            <span>◀ 上一組音節</span>
+          </button>
+          <button id="syl-next-btn" class="nav-arrow-btn">
+            <span>下一組音節 ▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 模組四：實用生活短句 ==================== -->
+    <section id="tab-sentences" class="tab-content-panel">
+      <div class="exercise-card">
+        <!-- 句子分類篩選列 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+          <div id="sen-filter-tabs" class="font-size-switcher" style="padding: 5px;"></div>
+          <button id="sen-add-custom-btn" class="font-btn" style="background:#eff6ff; color:#2563eb; border: 1.5px solid #bfdbfe;">
+            ➕ 新增自訂句子
+          </button>
+        </div>
+
+        <div class="card-header-bar">
+          <span id="sen-category" class="category-tag">晨間日常生活</span>
+          <span id="sen-counter" class="item-counter">第 1 / 10 句</span>
+        </div>
+
+        <h2 id="sen-title" class="card-title">早晨問好</h2>
+
+        <!-- 分段停頓提示卡 (點擊每個字塊都可以單獨發音) -->
+        <div class="display-target-box" style="padding: 1.8rem 1rem;">
+          <p style="font-size: 0.95rem; color: #475569; margin-bottom: 0.8rem; font-weight: 600;">
+            👇 請跟著「分段標記」放慢速度，每一段吸口氣、大聲念清楚：
+          </p>
+          <div id="sen-chunks-wrap" class="chunks-container">
+            <!-- 動態生成分塊 -->
+          </div>
+        </div>
+
+        <div id="sen-tip" class="tip-box">
+          💡 「早安」要大聲說出來，喚醒一整天的精神！
+        </div>
+
+        <!-- 操作按鈕欄 -->
+        <div class="action-buttons-grid">
+          <button id="sen-demo-btn" class="btn-elderly btn-outline">
+            <span>🔊 慢速示範讀</span>
+          </button>
+          <button id="sen-practice-btn" class="btn-elderly btn-success">
+            <span>🎤 換我大聲說！</span>
+          </button>
+        </div>
+
+        <!-- 翻頁列 -->
+        <div class="pagination-bar">
+          <button id="sen-prev-btn" class="nav-arrow-btn" disabled>
+            <span>◀ 上一句</span>
+          </button>
+          <button id="sen-next-btn" class="nav-arrow-btn">
+            <span>下一句 ▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 激勵星星浮層 (達標慶祝) -->
+  <div id="celebration-overlay" class="celebration-overlay">
+    <div class="celebration-banner">
+      <div class="banner-star">🌟</div>
+      <h3 id="banner-title" class="banner-title">太棒了，Michael！非常有精神！</h3>
+      <p id="banner-desc" class="banner-desc">您的聲音洪亮有力，今天又跨出了成功的一大步！</p>
+    </div>
+  </div>
+
+  <!-- 新增自訂句子彈窗 Modal -->
+  <div id="custom-modal" class="modal-backdrop">
+    <div class="modal-window">
+      <h3 class="modal-title">➕ 新增家屬或病友日常習慣語句</h3>
+      <p class="modal-subtitle">將生活中最常用、最重要的話語加入練習，實用性更高！</p>
+
+      <form id="custom-sentence-form">
+        <div class="form-group">
+          <label class="form-label" for="custom-input-title">語句情境或標題：</label>
+          <input type="text" id="custom-input-title" class="form-input" placeholder="例如：問候孫子、表達吃藥" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custom-input-text">完整句子內容：</label>
+          <input type="text" id="custom-input-text" class="form-input" placeholder="例如：小明放學回來啦！" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custom-input-chunks">分段停頓（用空格或逗號隔開）：</label>
+          <input type="text" id="custom-input-chunks" class="form-input" placeholder="例如：小明 ｜ 放學 ｜ 回來啦！">
+          <small style="color: #64748b;">提示：分段能幫助病友說話時不搶快、字字清楚。</small>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="custom-close-btn" class="btn-elderly btn-outline" style="min-height: 48px; min-width: 110px; font-size: 1rem;">取消</button>
+          <button type="submit" class="btn-elderly btn-primary" style="min-height: 48px; min-width: 140px; font-size: 1rem;">儲存句子</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 頁腳說明與醫學衛教指引 -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <p><strong>Michael的語動力 (Michael's Voice Power)</strong> ｜ 專為凌雲先生打造的專屬口舌言語復健伴侶 ❤️</p>
+      <p class="medical-disclaimer">
+        📌 衛教備忘：帕金森患者常因感覺校準偏差，自覺音量正常其實微弱。建議每日跟隨「音量能量計」綠色目標區練習 10~15 分鐘，大聲、深呼吸、放慢節奏，持之以恆效果顯著。
+      </p>
+    </div>
+  </footer>
+
+  <!-- 引用腳本 -->
+  <script src="js/exercises.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/tts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
